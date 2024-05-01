@@ -1,1 +1,8 @@
+.pytest_cache
 .vercel
+docs/
+env/
+node_modules/
+.env
+explaindev.json
+requirements.txt
