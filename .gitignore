@@ -1,1 +1,6 @@
 .vercel
+.pytest_cache
+.env
+docs/
+env/
+node_modules/
