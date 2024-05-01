@@ -4,3 +4,5 @@
 docs/
 env/
 node_modules/
+explaindev.json
+requirements.txt
