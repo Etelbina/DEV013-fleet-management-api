@@ -29,8 +29,3 @@ def test_latest_status():
     ):
         response = get_latest_trajectory()
         assert response.status_code == 200
-
-# intentar test con flask test client
-# mockear el get
-# impersonar psicopg
-# mock db

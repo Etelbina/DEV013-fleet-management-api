@@ -29,6 +29,3 @@ def test_taxis_status():
     ):
         response = get_taxis()
         assert response.status_code == 200
-
-# hacer mock de db (buscar opcion con flask en ambiente de pruebas)
-# o a get
