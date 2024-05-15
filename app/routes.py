@@ -1,35 +1,66 @@
 from flask import Flask, jsonify
-from app.models import taxi_model
-from app.serializers import taxis_serializer
+from .models.taxis import get_taxi_from_db
+from .models.trajectories import get_trajectories_from_db, get_latest_from_db
+from .utils import taxis_serializer, trajectories_serializer, latest_serializer
+from .conection_postgrestsql import close_crsr
 
 app = Flask(__name__)
 
-@app.route("/", methods=["GET"])
-def getting_taxis():
-   tuples_taxis = taxi_model()
-   dicts_taxis = taxis_serializer(tuples_taxis)
-   json_taxis = jsonify(dicts_taxis)
-   return json_taxis
+@app.route("/")
+def home_page():
+   """
+   A simple function to test the home page
+   """
+   return "Home"
 
+@app.route("/taxis", methods=["GET"])
+def get_taxis():
+   """
+   This function creates the route for the trajectories views,
+   gets the data from the db, 
+   executes the function to close the connection
+   and returns the array of taxis
+   Args:
+      tuples_trajectories: Executes the function to get the data from the db
+   Returns:
+      The taxis tuple transformed to a Json format
+   """
+   tuples_taxis = get_taxi_from_db()
+   close_crsr()
+   return jsonify(taxis_serializer(tuples_taxis))
 
-# @app.route("/trajectories", methods=["GET"])
-# def getting_trajectories():
-# #    limit = request.args.get("limit", default=10)
-# #    page = request.args.get("page", default=1)
-# #    date = request.args.get("date")
-   
-#    crsr = connection.cursor()
-# #    crsr.execute(f"SELECT * FROM trajectories ORDER BY {id} ASC LIMIT {limit} OFFSET {page};")
-#    crsr.execute(f"SELECT * FROM trajectories WHERE taxi_id='6418' ORDER BY taxi_id;")
-#    tuples_trajectories = crsr.fetchall()
-# #    dicts_trajectories = [{"latitude": taxi[2], "longitude": taxi[3]} for taxi in tuples_trajectories]
-# #    json_trajectories = json.dumps(dicts_trajectories)
-#    dicts_dates = [{"date": taxi[2]} for taxi in tuples_trajectories]
-#    json_dates = json.dumps(dicts_dates)
+# ToDo qué hace @app.route
+@app.route("/trajectories", methods=["GET"])
+def get_trajectories():
+   """
+   This function creates the route for the trajectories views,
+   gets the data from the db, 
+   executes the function to close the connection
+   and returns the array of trajectories
+   Args:
+      tuples_trajectories: Executes the function to get the data from the db
+   Returns:
+      The trajectories tuple transformed to a Json format
+   """
+   tuples_trajectories = get_trajectories_from_db()
+   close_crsr()
+   return jsonify(trajectories_serializer(tuples_trajectories))
 
-# #    return json_trajectories
-#    print(json_dates)
-#    return "<p>Trajectories</p>"   
+@app.route("/trajectories/latest", methods=["GET"])
+def get_latest_trajectory():
+   """
+   This function creates the route for the last trajectories views
+   gets the data from the db, 
+   executes the function to close the connection
+   and returns the array of the latest trajectories
+   Args:
+      tuple_latest: Executes the function to get the data from the db
+   Returns:
+      The latest trajectories tuple transformed to a Json format
+   """
+   tuple_latest = get_latest_from_db()
+   close_crsr()
+   return jsonify(latest_serializer(tuple_latest))
 
 if __name__ == "__main__":
     app.run(debug=True)

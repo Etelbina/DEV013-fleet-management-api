@@ -1,3 +1,42 @@
+## 1.2.0 - 0.0.2024
+
+### Learnings
+- New way for dates on pSQL
+
+### Added
+- Endpoint 3
+- Tests for other endpoints
+- Models folder
+
+### Changed
+- Name of files
+- Models
+
+### Fixed
+- Cursos closed
+
+### Removed
+- Lines to jsonify
+
+## 1.1.2 - 5.8.2024
+
+### Learnings
+- Manipulate time types
+
+### Added
+- End point 2
+- Test for end point 2
+
+### Changed
+- Name of functions
+- Name of some files
+
+### Fixed
+- .gitihnore
+
+### Removed
+- Files for testing tests
+
 ## 1.1.1 - 4.30.2024
 
 ### Learnings
